@@ -1,766 +1,260 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LIZENYX | BRAID ARTISTRY</title>
-<style>
-:root {
-  --pink: #ff83c8;
-  --chrome: #d8d8e4;
-  --black: #08070b;
-  --panel: #15121a;
-  --muted: #b9b2c1;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: radial-gradient(ellipse at top, #332032 0%, #100d14 42%, #050507 100%);
-  color: #f8f4fb;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-}
-h1, h2, h3, .brand {
-  font-family: Georgia, "Times New Roman", serif;
-  letter-spacing: 2px;
-}
-header {
-  padding: 25px 18px 15px;
-  text-align: center;
-  border-bottom: 1px solid #ffffff20;
-  background: #08070bd9;
-}
-.brand {
-  font-size: clamp(25px, 5vw, 43px);
-  font-weight: bold;
-  background: linear-gradient(110deg, white, #aaa9bd, #ffb1df, white);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.tagline {
-  color: var(--pink);
-  font-size: 11px;
-  letter-spacing: 4px;
-  margin-top: 9px;
-}
-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 16px 10px;
-}
-button, .btn {
-  cursor: pointer;
-  border: 1px solid #ffffff38;
-  border-radius: 30px;
-  padding: 12px 17px;
-  background: #ffffff08;
-  color: white;
-  font-size: 13px;
-  text-decoration: none;
-  transition: .2s;
-}
-button:hover, .btn:hover {
-  border-color: var(--pink);
-  box-shadow: 0 0 14px #ff83c844;
-}
-.primary {
-  background: linear-gradient(120deg, #ff83c8, #a86d9e);
-  color: #180b16;
-  border: 0;
-  font-weight: bold;
-}
-main { max-width: 1000px; margin: auto; padding: 20px; }
-.screen { display: none; }
-.screen.active { display: block; animation: appear .3s ease; }
-@keyframes appear {
-  from { opacity: .3; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.hero, .panel, .price-card {
-  background: linear-gradient(145deg, #201923, #0d0b11);
-  border: 1px solid #ffffff20;
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 18px;
-  box-shadow: 0 12px 35px #0006;
-}
-.hero { text-align: center; padding: 45px 22px; }
-.eyebrow {
-  color: var(--pink);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-size: 11px;
-}
-h1 { font-size: clamp(32px, 7vw, 60px); margin: 15px 0; }
-h2 { font-size: clamp(25px, 5vw, 36px); }
-h3 { font-size: 20px; }
-p { line-height: 1.7; color: #ddd6e3; }
-.muted { color: var(--muted); font-size: 13px; }
-.button-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
-.price-grid, .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-}
-.price-card h3 { color: var(--pink); }
-.price-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid #ffffff13;
-}
-.price-row span:last-child { color: var(--chrome); white-space: nowrap; }
-.gallery-tile {
-  min-height: 150px;
-  border: 1px dashed #ff83c866;
-  border-radius: 16px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 20px;
-  background: #ffffff05;
-  color: var(--muted);
-}
-label { display: block; margin: 15px 0 7px; font-size: 13px; }
-input, select, textarea {
-  width: 100%;
-  padding: 13px;
-  border-radius: 10px;
-  background: #0a090e;
-  color: white;
-  border: 1px solid #ffffff35;
-  font: inherit;
-}
-input:focus, select:focus, textarea:focus { outline: 1px solid var(--pink); }
-.booking-layout { display: grid; grid-template-columns: 1fr; gap: 18px; }
-.progress {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
-  margin-bottom: 22px;
-}
-.progress span {
-  text-align: center;
-  padding: 10px 3px;
-  border-radius: 8px;
-  background: #ffffff09;
-  color: var(--muted);
-  font-size: 11px;
-}
-.progress span.active { background: #ff83c825; color: var(--pink); border: 1px solid #ff83c855; }
-.step { display: none; }
-.step.active { display: block; }
-.step-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 25px;
-}
-.step-actions button { flex: 1; }
-.calendar-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 18px 0;
-}
-.calendar-head button { padding: 9px 13px; }
-.calendar-title { color: var(--pink); text-align: center; font-weight: bold; }
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 5px;
-}
-.day-name, .calendar-day {
-  display: grid;
-  place-items: center;
-  min-height: 40px;
-  border-radius: 8px;
-  font-size: 12px;
-}
-.day-name { color: var(--muted); }
-.calendar-day { padding: 5px 0; border: 1px solid #ffffff1a; background: #ffffff08; }
-.calendar-day.available { border-color: #ff83c866; }
-.calendar-day.selected { background: var(--pink); color: #180b16; font-weight: bold; }
-.calendar-day:disabled { opacity: .28; cursor: not-allowed; text-decoration: line-through; }
-.calendar-day:empty { border: 0; background: transparent; }
-.time-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-}
-.time-option.selected { background: var(--pink); color: #180b16; }
-.time-option:disabled { opacity: .3; cursor: not-allowed; }
-.deposit-box {
-  border: 1px solid #ff83c877;
-  border-radius: 16px;
-  padding: 22px;
-  background: linear-gradient(145deg, #291827, #100d14);
-}
-.deposit-number { font-size: 36px; color: var(--pink); font-weight: bold; }
-.balance-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid #ffffff1a;
-}
-.balance-row strong { text-align: right; }
-.review-box {
-  background: #08070b;
-  border-radius: 12px;
-  padding: 16px;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  line-height: 1.7;
-  font-size: 13px;
-}
-.notice { color: var(--pink); font-size: 13px; line-height: 1.6; }
-footer {
-  text-align: center;
-  padding: 25px;
-  color: var(--muted);
-  border-top: 1px solid #ffffff18;
-  font-size: 12px;
-}
-@media (min-width: 760px) {
-  .booking-layout { grid-template-columns: .8fr 1.2fr; }
-  .time-grid { grid-template-columns: repeat(3, 1fr); }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08080b">
+  <title>LIZENYX | Braid Artistry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#08080b;--panel:#111116;--pink:#ff83c8;--pink-light:#ffc1e3;--chrome:#d9d9e3;--muted:#a7a4b0;--line:#34313c;--white:#faf7fc}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#42203955,transparent 35%),radial-gradient(ellipse at 100% 30%,#27243a55,transparent 35%),var(--bg);color:var(--white);font-family:Montserrat,sans-serif;font-size:14px;line-height:1.7}
+    button,input,select,textarea{font:inherit}button,.btn{cursor:pointer;border:1px solid var(--line);border-radius:4px;padding:12px 18px;background:linear-gradient(135deg,#202027,#101014);color:var(--white);transition:.25s ease;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px}
+    button:hover,.btn:hover,nav button.current-page{border-color:var(--pink);box-shadow:0 0 14px #ff83c877}nav button.current-page{background:#ff83c825;color:var(--pink)}
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--pink);outline-offset:3px}a{color:var(--pink-light)}
+    .topbar{position:sticky;top:0;z-index:20;background:#08080bee;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff16}.nav-wrap{max-width:1200px;margin:auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .brand{font-family:"Cormorant Garamond",serif;font-size:25px;font-weight:700;letter-spacing:2px;color:var(--white);line-height:1.15}.brand span{color:var(--pink)}.brand small{display:block;font-family:Montserrat,sans-serif;font-size:8px;letter-spacing:4px;color:var(--chrome);margin-top:5px}
+    nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}nav button{padding:9px 12px;font-size:11px;letter-spacing:.5px;background:transparent}
+    main{max-width:1200px;margin:auto;padding:0 22px 70px}.screen{display:none;animation:appear .35s ease}.screen.active{display:block}@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .hero{min-height:76vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:65px 10px}.eyebrow{color:var(--pink);letter-spacing:5px;text-transform:uppercase;font-size:10px;font-weight:700}
+    h1,h2,h3{font-family:"Cormorant Garamond",serif;line-height:1.1;font-weight:500}.hero h1{font-size:clamp(46px,9vw,100px);letter-spacing:2px;margin:20px 0 12px;text-shadow:0 0 35px #ff83c82b}.chrome-text{background:linear-gradient(110deg,#fff,#aaaab8 35%,#fff 50%,#777786 70%,#f9d9ec);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{color:var(--muted);max-width:520px;font-size:13px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}.primary{background:linear-gradient(120deg,#ffb2dc,#ff70bf);color:#170b13;border-color:var(--pink);font-weight:700}.primary:hover{background:linear-gradient(120deg,#ffd5ec,#ff83c8);color:#170b13}.outline{border-color:var(--pink)}
+    .hero-mark{margin-top:55px;border:1px solid #ffffff22;padding:13px 25px;color:var(--chrome);font-size:10px;letter-spacing:4px;transform:rotate(-2deg);box-shadow:0 0 35px #ff83c817}
+    .section-heading{padding:48px 0 28px;border-bottom:1px solid var(--line);margin-bottom:28px}.section-heading h1{font-size:clamp(38px,6vw,60px);margin:10px 0}.section-heading p{color:var(--muted);margin:0}
+    .panel{border:1px solid var(--line);background:linear-gradient(145deg,#15151b,#0e0e12);padding:22px;border-radius:5px}
+    .price-layout{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:18px;align-items:start}.price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
+    .price-card{padding:20px;border:1px solid var(--line);border-radius:4px;background:linear-gradient(145deg,#1b1a22,#101014);min-width:0}.price-card h3{font-size:25px;color:var(--pink-light);margin:0 0 14px}
+    .price-row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px solid #ffffff0d;font-size:12px}.price-row:last-child{border-bottom:0}.price-row span:first-child{color:#e5e0e9}.price-row strong{color:var(--chrome);white-space:nowrap}.price-card p{color:var(--muted);font-size:11px;margin:12px 0 0}
+    .addons{background:#0c0c10;border:1px solid #4a3547;border-radius:4px;padding:17px}.addons h3{font-size:23px;color:var(--pink);margin:0 0 5px}.addons .sub{color:var(--muted);font-size:10px;margin:0 0 12px}.addon-row{padding:10px 0;border-bottom:1px solid #ffffff12;font-size:11px}.addon-row:last-child{border:0}.addon-row strong{display:block;color:var(--chrome);font-size:14px}.price-note{color:var(--muted);font-size:11px;margin-top:20px}
+    .gallery-intro{color:var(--muted);margin-bottom:24px}.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.gallery-slot{aspect-ratio:3/4;border:1px dashed #645166;border-radius:4px;background:radial-gradient(ellipse at center,#ff83c817,transparent 65%),linear-gradient(145deg,#17141d,#0b0b0e);display:flex;align-items:center;justify-content:center;text-align:center;padding:15px;color:#aaa2b0;font-size:11px}.gallery-slot span{display:block;font-family:"Cormorant Garamond",serif;font-size:25px;color:var(--pink-light);margin-bottom:8px}
+    .booking-layout{display:block}.booking-panel{max-width:850px;margin:0 auto}.step-progress{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:28px}.step-dot{padding:10px 5px;text-align:center;border:1px solid var(--line);color:var(--muted);font-size:10px;border-radius:3px}.step-dot span{display:block;font-size:15px;font-weight:700;margin-bottom:3px}.step-dot.active{color:var(--pink);border-color:var(--pink);background:#ff83c815;box-shadow:0 0 12px #ff83c822}
+    .booking-step{display:none}.booking-step.active{display:block}.booking-step h2{font-size:34px;margin:0 0 8px}.step-description{color:var(--muted);font-size:12px;margin-bottom:25px}.field{margin-bottom:19px}
+    label{display:block;color:#e8e2eb;font-size:11px;font-weight:600;margin-bottom:8px}input,select,textarea{width:100%;padding:13px;color:var(--white);background:#09090d;border:1px solid #3b3744;border-radius:3px}input::placeholder,textarea::placeholder{color:#77717e}select option{background:#111116}textarea{resize:vertical;min-height:100px}
+    .field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{border:1px solid var(--line);padding:14px;border-radius:3px;background:#0d0d12;cursor:pointer;display:flex;gap:10px;align-items:flex-start}.choice:has(input:checked){border-color:var(--pink);background:#ff83c812}.choice input{width:auto;margin-top:5px;accent-color:var(--pink)}.choice strong{display:block;font-size:12px}.choice small{display:block;color:var(--muted);font-size:10px}
+    .step-actions{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}.step-actions button{min-width:105px}
+    .summary{border:1px solid var(--line);background:#0a0a0e;padding:17px;border-radius:3px;margin:15px 0}.summary-row{display:flex;justify-content:space-between;gap:15px;padding:8px 0;border-bottom:1px solid #ffffff12;font-size:12px}.summary-row:last-child{border-bottom:0}.summary-row span{color:var(--muted)}.summary-row strong{text-align:right;overflow-wrap:anywhere}
+    .deposit-card{text-align:center;border:1px solid #62415a;background:radial-gradient(ellipse at top,#ff83c818,transparent 70%),#0c0b10;padding:25px 20px;margin-top:20px;border-radius:4px}.deposit-amount{font-family:"Cormorant Garamond",serif;font-size:58px;color:var(--pink-light);line-height:1.2;margin:8px 0}.deposit-card p{color:var(--muted);font-size:12px}
+    .cashapp-button{display:flex;width:100%;max-width:430px;min-height:58px;margin:22px auto 16px;font-size:14px;font-weight:700;text-align:center;background:linear-gradient(120deg,#ffb2dc,#ff70bf);color:#170b13;border:1px solid var(--pink);box-shadow:0 0 22px #ff83c82b}.cashapp-button:hover{background:#ffd5ec;color:#170b13}
+    .notice{border-left:2px solid var(--pink);background:#ff83c80c;padding:12px 14px;text-align:left;color:#d4ced8;font-size:11px;margin-top:18px}.review-message{color:var(--muted);font-size:12px}
+    .contact-card{text-align:center;padding:35px 20px}.contact-card h2{font-size:37px}.contact-card p{max-width:570px;margin:10px auto 22px;color:var(--muted);font-size:12px}
+    footer{border-top:1px solid var(--line);padding:25px 20px;text-align:center;color:var(--muted);font-size:10px;letter-spacing:1px}footer strong{color:var(--pink)}.small-note{color:var(--muted);font-size:10px}
+
+    .gallery-photo{margin:0;position:relative;overflow:hidden;aspect-ratio:3/4;border:1px solid #5b4257;border-radius:5px;background:#111;box-shadow:0 10px 28px #0008}
+    .gallery-photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+    .gallery-photo:hover img{transform:scale(1.035)}
+    .gallery-photo figcaption{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,#08070be8);color:var(--pink-light);font-size:10px;letter-spacing:2px}
+    .meet-braider{display:grid;grid-template-columns:minmax(0, .8fr) minmax(0,1.2fr);gap:24px;align-items:center;margin-top:32px;border-color:#ff83c855}
+    .meet-photo{border:1px solid var(--pink);padding:5px;background:linear-gradient(135deg,#ff83c8,#d8d8e4);border-radius:4px;max-width:360px}
+    .meet-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 35%;}
+    .meet-copy h2{color:var(--pink-light);margin:10px 0}
+    @media(max-width:600px){.meet-braider{grid-template-columns:1fr}.meet-photo{max-width:300px;margin:auto}.meet-copy{text-align:center}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+    @media(max-width:760px){.nav-wrap{justify-content:center}.brand{text-align:center}nav{justify-content:center}nav button{padding:8px 10px;font-size:10px}.price-layout{grid-template-columns:1fr}.price-grid{grid-template-columns:1fr 1fr}.addons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}.addons h3,.addons .sub{grid-column:1/-1}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:480px){main{padding-left:14px;padding-right:14px}.nav-wrap{padding:12px 10px}.brand{font-size:22px}nav{gap:5px}nav button{padding:8px;font-size:9px}.price-grid,.field-grid,.choice-grid{grid-template-columns:1fr}.price-card{padding:17px}.gallery-grid{gap:9px}.step-progress{gap:4px}.step-dot{font-size:8px;padding:8px 2px}.step-dot span{font-size:13px}.panel{padding:16px}.booking-step h2{font-size:29px}.step-actions button{padding:11px;min-width:0}}
+  </style>
 </head>
 <body>
-<header>
-  <div class="brand">LIZENYX</div>
-  <div class="tagline">BRAID ARTISTRY</div>
-</header>
-
-<nav aria-label="Main navigation">
-  <button data-go="home">Home</button>
-  <button data-go="prices">Prices</button>
-  <button data-go="gallery">View My Work</button>
-  <button class="primary" data-go="booking">Book the Look</button>
-  <button data-go="about">About</button>
-</nav>
-
-<main>
-<section class="screen active" id="home">
-  <div class="hero">
-    <div class="eyebrow">Your hair. Your era. Your signature.</div>
-    <h1>THE ART OF THE BRAID.</h1>
-    <p>Glossy looks. Clean parts. Signature styles.</p>
-    <p>Welcome to LIZENYX | BRAID ARTISTRY.</p>
-    <div class="button-row">
-      <button class="primary" data-go="booking">Book an Appointment</button>
-      <button data-go="prices">Explore Prices</button>
+  <header class="topbar">
+    <div class="nav-wrap">
+      <div class="brand">LIZENYX <span>|</span><small>BRAID ARTISTRY</small></div>
+      <nav aria-label="Main navigation">
+        <button type="button" data-go="home" onclick="goToScreen('home')">Home</button>
+        <button type="button" data-go="prices" onclick="goToScreen('prices')">Prices</button>
+        <button type="button" data-go="work" onclick="goToScreen('work')">My Work</button>
+        <button type="button" data-go="booking" onclick="goToScreen('booking')">Book</button>
+        <button type="button" data-go="contact" onclick="goToScreen('contact')">Contact</button>
+      </nav>
     </div>
-  </div>
-  <div class="panel">
-    <h2>A LOOK THAT'S ALL YOU.</h2>
-    <p>Explore the braid menu, choose your style, and request your appointment.</p>
-  </div>
-</section>
-
-<section class="screen" id="prices">
-  <div class="eyebrow">The menu</div>
-  <h2>PRICE LIST</h2>
-  <p class="muted">Prices are listed in USD. Extra length and boho add-ons are listed below.</p>
-  <div class="price-grid">
-    <div class="price-card">
-      <h3>Knotless Braids</h3>
-      <div class="price-row"><span>XL Knotless</span><span>$90</span></div>
-      <div class="price-row"><span>Large Knotless</span><span>$110</span></div>
-      <div class="price-row"><span>Medium Knotless</span><span>$130</span></div>
-      <div class="price-row"><span>Smedium Knotless</span><span>$160</span></div>
-      <div class="price-row"><span>Small Knotless</span><span>$200</span></div>
-      <div class="price-row"><span>X-Small Knotless</span><span>$300</span></div>
-    </div>
-    <div class="price-card">
-      <h3>Traditional Box Braids</h3>
-      <div class="price-row"><span>XL Box Braids</span><span>$90</span></div>
-      <div class="price-row"><span>Large Box Braids</span><span>$110</span></div>
-      <div class="price-row"><span>Medium Box Braids</span><span>$130</span></div>
-      <div class="price-row"><span>Smedium Box Braids</span><span>$160</span></div>
-      <div class="price-row"><span>Small Box Braids</span><span>$200</span></div>
-      <div class="price-row"><span>X-Small Box Braids</span><span>$300</span></div>
-    </div>
-    <div class="price-card">
-      <h3>Stitch Braids</h3>
-      <div class="price-row"><span>2 Stitch Braids</span><span>$30</span></div>
-      <div class="price-row"><span>5–10 Stitch Braids</span><span>$65</span></div>
-      <div class="price-row"><span>4 Stitch + Style</span><span>$40</span></div>
-    </div>
-    <div class="price-card">
-      <h3>Soft Locs</h3>
-      <div class="price-row"><span>Regular Soft Locs</span><span>$130</span></div>
-      <div class="price-row"><span>Bob Soft Locs</span><span>$135</span></div>
-    </div>
-    <div class="price-card">
-      <h3>Fulani & Tribal</h3>
-      <div class="price-row"><span>Fulani with Knotless</span><span>$150</span></div>
-      <div class="price-row"><span>Tribal with Knotless</span><span>$150</span></div>
-      <div class="price-row"><span>Fulani with Box Braids</span><span>$150</span></div>
-      <div class="price-row"><span>Tribal with Box Braids</span><span>$150</span></div>
-    </div>
-    <div class="price-card">
-      <h3>Men's Styles</h3>
-      <div class="price-row"><span>2 Stitch Braids</span><span>$15</span></div>
-      <div class="price-row"><span>4 Braids</span><span>$35</span></div>
-      <div class="price-row"><span>5 Braids</span><span>$40</span></div>
-      <div class="price-row"><span>6–8 Braids</span><span>$50</span></div>
-    </div>
-  </div>
-  <div class="panel">
-    <h3>Add-ons</h3>
-    <div class="price-row"><span>Butt length or longer</span><span>+$15</span></div>
-    <div class="price-row"><span>Boho</span><span>+$5</span></div>
-    <p class="muted">Please confirm any add-on pricing with the stylist before your appointment.</p>
-    <button class="primary" data-go="booking">Book Your Style</button>
-  </div>
-</section>
-
-<section class="screen" id="gallery">
-  <div class="eyebrow">The portfolio</div>
-  <h2>VIEW MY WORK</h2>
-  <p>Real styles by LIZENYX. Your braid pictures can be added here as you build your portfolio.</p>
-  <div class="gallery-grid">
-    <div class="gallery-tile">Your braid photo goes here</div>
-    <div class="gallery-tile">Your braid photo goes here</div>
-    <div class="gallery-tile">Your braid photo goes here</div>
-  </div>
-  <p class="muted">To add pictures later, upload them to your GitHub repository and add image elements to this gallery.</p>
-</section>
-
-<section class="screen" id="booking">
-  <div class="eyebrow">Make it official</div>
-  <h2>REQUEST YOUR APPOINTMENT</h2>
-  <p>Complete each step to prepare your booking request.</p>
-
-  <div class="booking-layout">
-    <aside class="panel">
-      <div class="eyebrow">Secure your spot</div>
-      <h3>Booking Deposit</h3>
-      <div class="deposit-number">$15</div>
-      <p>Your $15 deposit goes toward the total price of your hairstyle. It is not an extra fee.</p>
-      <p class="muted">Example: $150 hairstyle − $15 deposit = $135 remaining after your appointment.</p>
-      <a class="btn primary" href="https://cash.app/$Wh0sLizaa" target="_blank" rel="noopener">Open Cash App</a>
-      <p class="muted">Your appointment is not confirmed until the stylist confirms your date, time, and deposit.</p>
-    </aside>
-
-    <div class="panel">
-      <div class="progress" id="progress">
-        <span class="active">01 Style</span>
-        <span>02 Date</span>
-        <span>03 Details</span>
-        <span>04 Deposit</span>
-        <span>05 Review</span>
+  </header>
+  <main>
+    <section class="screen active" id="home">
+      <div class="hero">
+        <div class="eyebrow">Luxury braids. Main character energy.</div>
+        <h1 class="chrome-text">LIZENYX</h1>
+        <div class="eyebrow">BRAID ARTISTRY</div>
+        <p>Your hair. Your era. Your signature. Step into your next look with braids made to match your style.</p>
+        <div class="hero-actions">
+          <button class="primary" onclick="goToScreen('booking')">Book Your Appointment â†—</button>
+          <button class="outline" onclick="goToScreen('prices')">Explore Prices</button>
+        </div>
+        <div class="hero-mark">YOUR LOOK. YOUR LEGACY.</div>
       </div>
+      <div class="panel contact-card">
+        <div class="eyebrow">Your next look starts here</div><h2>Made to stand out.</h2>
+        <p>From knotless braids to stitch styles and soft locs, find a look that feels like you.</p>
+        <button class="primary" onclick="goToScreen('work')">View My Work</button>
+      </div>
+    </section>
 
-      <form id="bookingForm">
-        <div class="step active">
-          <h3>01 — Choose Your Style</h3>
-          <label for="style">Hairstyle *</label>
-          <select id="style" required>
-            <option value="">Select a hairstyle</option>
-            <optgroup label="Knotless Braids">
-              <option data-price="90">XL Knotless — $90</option>
-              <option data-price="110">Large Knotless — $110</option>
-              <option data-price="130">Medium Knotless — $130</option>
-              <option data-price="160">Smedium Knotless — $160</option>
-              <option data-price="200">Small Knotless — $200</option>
-              <option data-price="300">X-Small Knotless — $300</option>
-            </optgroup>
-            <optgroup label="Traditional Box Braids">
-              <option data-price="90">XL Box Braids — $90</option>
-              <option data-price="110">Large Box Braids — $110</option>
-              <option data-price="130">Medium Box Braids — $130</option>
-              <option data-price="160">Smedium Box Braids — $160</option>
-              <option data-price="200">Small Box Braids — $200</option>
-              <option data-price="300">X-Small Box Braids — $300</option>
-            </optgroup>
-            <optgroup label="Stitch Braids">
-              <option data-price="30">2 Stitch Braids — $30</option>
-              <option data-price="65">5–10 Stitch Braids — $65</option>
-              <option data-price="40">4 Stitch + Style — $40</option>
-            </optgroup>
-            <optgroup label="Soft Locs">
-              <option data-price="130">Regular Soft Locs — $130</option>
-              <option data-price="135">Bob Soft Locs — $135</option>
-            </optgroup>
-            <optgroup label="Fulani & Tribal">
-              <option data-price="150">Fulani with Knotless — $150</option>
-              <option data-price="150">Tribal with Knotless — $150</option>
-              <option data-price="150">Fulani with Box Braids — $150</option>
-              <option data-price="150">Tribal with Box Braids — $150</option>
-            </optgroup>
-            <optgroup label="Men's Styles">
-              <option data-price="15">2 Stitch Braids — $15</option>
-              <option data-price="35">4 Braids — $35</option>
-              <option data-price="40">5 Braids — $40</option>
-              <option data-price="50">6–8 Braids — $50</option>
-            </optgroup>
-          </select>
-
-          <label for="length">Length</label>
-          <select id="length">
-            <option value="0">Standard length — no extra charge</option>
-            <option value="15">Butt length or longer — +$15</option>
-          </select>
-
-          <label for="boho">Boho add-on</label>
-          <select id="boho">
-            <option value="0">No boho</option>
-            <option value="5">Add boho — +$5</option>
-          </select>
-          <p class="muted">Your add-ons will be included in the total shown at the deposit step.</p>
-          <div class="step-actions">
-            <button type="button" data-next>Next →</button>
-          </div>
+    <section class="screen" id="prices">
+      <div class="section-heading"><div class="eyebrow">Choose your next look</div><h1>PRICE LIST</h1><p>Prices are listed in USD.</p></div>
+      <div class="price-layout">
+        <div class="price-grid">
+          <article class="price-card"><h3>Knotless Braids</h3>
+            <div class="price-row"><span>XL Knotless</span><strong>$90</strong></div><div class="price-row"><span>Large</span><strong>$110</strong></div><div class="price-row"><span>Medium</span><strong>$130</strong></div><div class="price-row"><span>Smedium</span><strong>$180</strong></div><div class="price-row"><span>Small</span><strong>$200</strong></div><div class="price-row"><span>X-Small</span><strong>$300</strong></div>
+          </article>
+          <article class="price-card"><h3>Traditional Box Braids</h3>
+            <div class="price-row"><span>XL Box Braids</span><strong>$90</strong></div><div class="price-row"><span>Large</span><strong>$110</strong></div><div class="price-row"><span>Medium</span><strong>$130</strong></div><div class="price-row"><span>Smedium</span><strong>$180</strong></div><div class="price-row"><span>Small</span><strong>$200</strong></div><div class="price-row"><span>X-Small</span><strong>$300</strong></div>
+          </article>
+          <article class="price-card"><h3>Stitch Braids</h3><div class="price-row"><span>2 Stitch Braids</span><strong>$40</strong></div><div class="price-row"><span>4 Stitch Braids and Style</span><strong>$45</strong></div><div class="price-row"><span>6â€“10 Stitch Braids</span><strong>$70</strong></div><div class="price-row"><span>15â€“25 Stitch Braids</span><strong>$90</strong></div></article>
+          <article class="price-card"><h3>Soft Locs</h3><div class="price-row"><span>Regular Soft Locs</span><strong>$130</strong></div><div class="price-row"><span>Bob Soft Locs</span><strong>$135</strong></div></article>
+          <article class="price-card"><h3>Customized Braids</h3><div class="price-row"><span>Fulani with Knotless</span><strong>$150</strong></div><div class="price-row"><span>Fulani with Box Braids</span><strong>$150</strong></div><div class="price-row"><span>Tribal with Knotless</span><strong>$150</strong></div><div class="price-row"><span>Tribal with Box Braids</span><strong>$150</strong></div><div class="price-row"><span>Lemonade Braids</span><strong>$100</strong></div></article>
+          <article class="price-card"><h3>Men's Styles</h3><div class="price-row"><span>2 Stitch Braids</span><strong>$15</strong></div><div class="price-row"><span>4 Braids</span><strong>$35</strong></div><div class="price-row"><span>5 Braids</span><strong>$40</strong></div><div class="price-row"><span>6 Braids</span><strong>$45</strong></div><div class="price-row"><span>7â€“8 Braids</span><strong>$50</strong></div><div class="price-row"><span>9â€“12 Braids</span><strong>$60</strong></div><div class="price-row"><span>2-Strand Twists</span><strong>$50</strong></div></article>
         </div>
+        <aside class="addons"><h3>Add-ons</h3><p class="sub">Small extras for your look</p><div class="addon-row"><strong>+$15</strong>Butt length or longer</div><div class="addon-row"><strong>+$10</strong>Boho</div><h3 style="grid-column:1/-1;margin-top:18px">Brows &amp; Lashes</h3><div class="addon-row"><strong>$5</strong>Eyebrow Razor Cleanup</div><div class="addon-row"><strong>$15</strong>Lash Cluster Application</div><p class="sub" style="grid-column:1/-1">FYI: Brows are basic razor cleanups and lashes are cluster applications, so prices reflect these simple services. More advanced options may be added in the future as I expand my supplies and skills.</p></aside>
+      </div>
+      <p class="price-note">Please select your style when booking. If you have questions about a style or price, send a message through Instagram.</p>
+    </section>
 
-        <div class="step">
-          <h3>02 — Choose Your Date & Time</h3>
-          <p class="muted">Select an available date from the calendar. Dates you have blocked will be disabled.</p>
-          <div class="calendar-head">
-            <button type="button" id="prevMonth" aria-label="Previous month">←</button>
-            <div class="calendar-title" id="calendarTitle"></div>
-            <button type="button" id="nextMonth" aria-label="Next month">→</button>
-          </div>
-          <div class="calendar" id="calendar"></div>
-          <p id="dateMessage" class="notice">Choose a date to continue.</p>
+    <section class="screen" id="work">
+      <div class="section-heading"><div class="eyebrow">The braid portfolio</div><h1>VIEW MY WORK</h1><p>Every style has its own signature.</p></div>
+      <p class="gallery-intro">A few looks created by LIZENYX | BRAID ARTISTRY.</p>
+      <div class="gallery-grid">
+        <figure class="gallery-photo"><img src="images/work-01.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 01</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-02.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 02</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-03.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 03</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-04.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 04</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-05.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 05</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-06.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 06</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-07.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 07</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-08.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 08</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-09.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 09</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-10.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 10</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-11.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 11</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-12.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 12</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-13.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 13</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-14.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 14</figcaption></figure>
+        <figure class="gallery-photo"><img src="images/work-15.jpg" alt="Braid style by LIZENYX" loading="lazy"><figcaption>LOOK 15</figcaption></figure>
+      </div>
+      <section class="meet-braider panel">
+        <div class="meet-photo"><img src="images/liz-about.jpg" alt="Liz, the braider behind LIZENYX" loading="lazy"></div>
+        <div class="meet-copy"><div class="eyebrow">The girl behind the brand</div><h2>Meet the Braider â™¡</h2>
+        <p>Heyyy, I'm Liz! I'm the girl behind LIZENYX | BRAID ARTISTRY. I love braiding and creating styles that help people feel good and express themselves. Thank you for supporting my small business and trusting me with your hair. There's so much more to come! ðŸ’—</p></div>
+      </section>
+    </section>
 
-          <label>Preferred time *</label>
-          <div class="time-grid" id="timeGrid"></div>
-          <p class="muted">A requested date and time are not confirmed until the stylist approves them.</p>
-          <div class="step-actions">
-            <button type="button" data-prev>← Back</button>
-            <button type="button" data-next class="primary">Next →</button>
-          </div>
+    <section class="screen" id="booking">
+      <div class="section-heading"><div class="eyebrow">Your appointment starts here</div><h1>BOOK YOUR LOOK</h1><p>Complete each step, review your request, and send it through Instagram.</p></div>
+      <div class="booking-layout"><div class="panel booking-panel">
+        <div class="step-progress">
+          <div class="step-dot active" data-step-dot="1"><span>01</span>Style</div><div class="step-dot" data-step-dot="2"><span>02</span>Schedule</div><div class="step-dot" data-step-dot="3"><span>03</span>Details</div><div class="step-dot" data-step-dot="4"><span>04</span>Deposit</div><div class="step-dot" data-step-dot="5"><span>05</span>Review</div>
         </div>
-
-        <div class="step">
-          <h3>03 — Your Details</h3>
-          <label for="clientName">Your name *</label>
-          <input id="clientName" autocomplete="name" required placeholder="First and last name">
-
-          <label for="contact">Email or phone *</label>
-          <input id="contact" required placeholder="How can I contact you?">
-
-          <label for="notes">Extra details (optional)</label>
-          <textarea id="notes" rows="3" placeholder="Color, inspiration, or other requests"></textarea>
-          <div class="step-actions">
-            <button type="button" data-prev>← Back</button>
-            <button type="button" data-next class="primary">Next →</button>
+        <form id="bookingForm">
+          <div class="booking-step active" data-step="1">
+            <h2>Choose your style.</h2><p class="step-description">Select the hairstyle and length you want.</p>
+            <div class="field"><label for="style">Hairstyle</label><select id="style" name="style" required>
+              <option value="">Choose a style</option>
+              <optgroup label="Knotless Braids"><option value="XL Knotless â€” $90" data-price="90">XL Knotless â€” $90</option><option value="Large Knotless â€” $110" data-price="110">Large Knotless â€” $110</option><option value="Medium Knotless â€” $130" data-price="130">Medium Knotless â€” $130</option><option value="Smedium Knotless â€” $180" data-price="180">Smedium Knotless â€” $180</option><option value="Small Knotless â€” $200" data-price="200">Small Knotless â€” $200</option><option value="X-Small Knotless â€” $300" data-price="300">X-Small Knotless â€” $300</option></optgroup>
+              <optgroup label="Traditional Box Braids"><option value="XL Box Braids â€” $90" data-price="90">XL Box Braids â€” $90</option><option value="Large Box Braids â€” $110" data-price="110">Large Box Braids â€” $110</option><option value="Medium Box Braids â€” $130" data-price="130">Medium Box Braids â€” $130</option><option value="Smedium Box Braids â€” $180" data-price="180">Smedium Box Braids â€” $180</option><option value="Small Box Braids â€” $200" data-price="200">Small Box Braids â€” $200</option><option value="X-Small Box Braids â€” $300" data-price="300">X-Small Box Braids â€” $300</option></optgroup>
+              <optgroup label="Stitch Braids"><option value="2 Stitch Braids â€” $40" data-price="40">2 Stitch Braids â€” $40</option><option value="4 Stitch Braids and Style â€” $45" data-price="45">4 Stitch Braids and Style â€” $45</option><option value="6â€“10 Stitch Braids â€” $70" data-price="70">6â€“10 Stitch Braids â€” $70</option><option value="15â€“25 Stitch Braids â€” $90" data-price="90">15â€“25 Stitch Braids â€” $90</option></optgroup>
+              <optgroup label="Soft Locs"><option value="Regular Soft Locs â€” $130" data-price="130">Regular Soft Locs â€” $130</option><option value="Bob Soft Locs â€” $135" data-price="135">Bob Soft Locs â€” $135</option></optgroup>
+              <optgroup label="Customized Braids"><option value="Fulani with Knotless â€” $150" data-price="150">Fulani with Knotless â€” $150</option><option value="Fulani with Box Braids â€” $150" data-price="150">Fulani with Box Braids â€” $150</option><option value="Tribal with Knotless â€” $150" data-price="150">Tribal with Knotless â€” $150</option><option value="Tribal with Box Braids â€” $150" data-price="150">Tribal with Box Braids â€” $150</option><option value="Lemonade Braids â€” $100" data-price="100">Lemonade Braids â€” $100</option></optgroup>
+              <optgroup label="Men's Styles"><option value="Men's 2 Stitch Braids â€” $15" data-price="15">Men's 2 Stitch Braids â€” $15</option><option value="Men's 4 Braids â€” $35" data-price="35">Men's 4 Braids â€” $35</option><option value="Men's 5 Braids â€” $40" data-price="40">Men's 5 Braids â€” $40</option><option value="Men's 6 Braids â€” $45" data-price="45">Men's 6 Braids â€” $45</option><option value="Men's 7â€“8 Braids â€” $50" data-price="50">Men's 7â€“8 Braids â€” $50</option><option value="Men's 9â€“12 Braids â€” $60" data-price="60">Men's 9â€“12 Braids â€” $60</option><option value="2-Strand Twists â€” $50" data-price="50">2-Strand Twists â€” $50</option></optgroup><optgroup label="Brows &amp; Lashes"><option value="Eyebrow Razor Cleanup â€” $5" data-price="5">Eyebrow Razor Cleanup â€” $5</option><option value="Lash Cluster Application â€” $15" data-price="15">Lash Cluster Application â€” $15</option></optgroup>
+            </select></div>
+            <div class="field"><label>Length</label><div class="choice-grid">
+              <label class="choice"><input type="radio" name="length" value="Mid-back â€” no extra charge" checked><span><strong>Mid-back</strong><small>No extra charge</small></span></label>
+              <label class="choice"><input type="radio" name="length" value="Butt length or longer â€” +$15"><span><strong>Butt length or longer</strong><small>+$15</small></span></label>
+            </div></div>
+            <div class="field"><label>Boho add-on?</label><div class="choice-grid">
+              <label class="choice"><input type="radio" name="boho" value="No boho" checked><span><strong>No boho</strong><small>+$0</small></span></label>
+              <label class="choice"><input type="radio" name="boho" value="Boho â€” +$10"><span><strong>Add boho</strong><small>+$10</small></span></label>
+            </div></div>
+            <div class="summary"><div class="summary-row"><span>Estimated style price</span><strong id="estimatedPrice">$0</strong></div><p class="small-note">Final pricing may need confirmation before your appointment.</p></div>
+            <div class="step-actions"><span></span><button type="button" class="primary" onclick="nextStep(1)">Continue â†’</button></div>
           </div>
-        </div>
 
-        <div class="step">
-          <h3>04 — Secure Your Appointment</h3>
-          <div class="deposit-box">
-            <div class="eyebrow">Deposit required</div>
-            <div class="deposit-number">$15.00</div>
-            <p>The deposit secures your appointment and is applied toward your hairstyle price.</p>
-            <div class="balance-row"><span>Hairstyle + add-ons</span><strong id="totalPrice">$0.00</strong></div>
-            <div class="balance-row"><span>Deposit due now</span><strong>$15.00</strong></div>
-            <div class="balance-row"><span>Remaining after appointment</span><strong id="remainingPrice">$0.00</strong></div>
-            <p id="depositWarning" class="notice" hidden></p>
-            <a class="btn primary" href="https://cash.app/$Wh0sLizaa" target="_blank" rel="noopener">Pay $15 Deposit on Cash App</a>
-            <p class="muted">After paying, return here and continue. This website cannot automatically verify payment, so your booking remains pending until the stylist confirms it.</p>
+          <div class="booking-step" data-step="2">
+            <h2>Pick your date.</h2><p class="step-description">Choose your preferred date and time. Your request is not confirmed until I approve it.</p>
+            <div class="field-grid"><div class="field"><label for="date">Preferred date</label><input type="date" id="date" name="date" required></div>
+              <div class="field"><label for="time">Preferred time</label><select id="time" name="time" required><option value="">Choose a time</option><option>7:00 AM</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option></select></div></div>
+            <div class="notice">The calendar does not sync with a live appointment system. A date and time are only preferences until I confirm availability.</div>
+            <div class="step-actions"><button type="button" onclick="prevStep(2)">â† Back</button><button type="button" class="primary" onclick="nextStep(2)">Continue â†’</button></div>
           </div>
-          <div class="step-actions">
-            <button type="button" data-prev>← Back</button>
-            <button type="button" data-next class="primary">Continue →</button>
-          </div>
-        </div>
 
-        <div class="step">
-          <h3>05 — Review Your Request</h3>
-          <div class="review-box" id="review"></div>
-          <p class="notice">Submitting this form prepares a request for you to copy. It does not send your information to the stylist automatically.</p>
-          <div class="step-actions">
-            <button type="button" data-prev>← Edit</button>
-            <button type="submit" class="primary">Prepare Request ✦</button>
+          <div class="booking-step" data-step="3">
+            <h2>Your details.</h2><p class="step-description">Tell me who the appointment is for and share any style details.</p>
+            <div class="field"><label for="customerName">Your name</label><input id="customerName" name="customerName" type="text" placeholder="Enter your name" required></div>
+            <div class="field"><label for="notes">Extra details (optional)</label><textarea id="notes" name="notes" placeholder="Color, parting, inspiration, or anything else I should know..."></textarea></div>
+            <p class="small-note">After reviewing your request, you will send it to my braiding Instagram account through a direct message.</p>
+            <div class="step-actions"><button type="button" onclick="prevStep(3)">â† Back</button><button type="button" class="primary" onclick="nextStep(3)">Continue â†’</button></div>
           </div>
-          <div id="result" class="panel" hidden>
-            <h3>Your Request Is Ready</h3>
-            <p>Copy your request and send it to the stylist using your agreed contact method.</p>
-            <textarea id="requestText" rows="10" readonly></textarea>
-            <div class="button-row">
-              <button type="button" class="primary" id="copyRequest">Copy Request</button>
+
+          <div class="booking-step" data-step="4">
+            <h2>Secure your spot.</h2><p class="step-description">A $15 deposit is required toward your appointment total.</p>
+            <div class="deposit-card"><div class="eyebrow">Appointment deposit</div><div class="deposit-amount">$15</div><p>This deposit goes toward your total service price.</p>
+              <a class="cashapp-button" href="https://cash.app/$Wh0sLizaa" target="_blank" rel="noopener noreferrer">Pay $15 Deposit on Cash App â†—</a>
+              <p>After paying, return here and continue to review your booking request.</p>
+              <div class="notice">This website cannot automatically verify Cash App payments. Your booking stays pending until I confirm your deposit and appointment details. Please keep your payment confirmation.</div>
             </div>
-            <p class="muted">Your appointment is still pending until the stylist confirms the date, time, and deposit.</p>
+            <div class="field" style="margin-top:22px"><label class="choice"><input type="checkbox" id="depositAcknowledged"><span><strong>I understand the deposit instructions.</strong><small>I will send my request and payment confirmation for review.</small></span></label></div>
+            <div class="step-actions"><button type="button" onclick="prevStep(4)">â† Back</button><button type="button" class="primary" onclick="nextStep(4)">Continue â†’</button></div>
           </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
 
-<section class="screen" id="about">
-  <div class="panel">
-    <div class="eyebrow">The LIZENYX vibe</div>
-    <h2>ABOUT THE BRAND</h2>
-    <p>LIZENYX | BRAID ARTISTRY is all about a look that matches your energy. Explore the braid menu, view the portfolio, and request your appointment.</p>
-    <button class="primary" data-go="booking">Book the Look</button>
-  </div>
-</section>
-</main>
+          <div class="booking-step" data-step="5">
+            <h2>Review your request.</h2><p class="step-description">Double-check your details before preparing your message.</p>
+            <div class="summary" id="bookingSummary"></div>
+            <p class="review-message">Copy the message below and send it in a DM to your braiding Instagram account. Your appointment is not booked until your request, availability, and deposit are confirmed.</p>
+            <div class="field"><label for="requestMessage">Your booking request</label><textarea id="requestMessage" readonly rows="12"></textarea></div>
+            <div class="field-grid"><button type="button" class="primary" onclick="copyRequest()">Copy Booking Request</button><button type="button" onclick="downloadRequest()">Save Request as Text</button></div>
+            <div id="copyStatus" class="small-note" aria-live="polite" style="margin-top:10px"></div>
+            <p class="review-message" style="margin-top:14px">Once you copy or save your request, tap the link below to send it to me on Instagram.</p>
+            <p style="text-align:center;margin:12px 0 18px"><a class="cashapp-button" href="https://www.instagram.com/lizenyx/" target="_blank" rel="noopener noreferrer">Open @lizenyx on Instagram â†—</a></p>
+            <div class="notice">This form does not automatically send or save your appointment. Make sure you DM your request and wait for confirmation.</div>
+            <div class="step-actions"><button type="button" onclick="prevStep(5)">â† Back</button><button type="button" onclick="goToScreen('home')">Back to Home</button></div>
+          </div>
+        </form>
+      </div></div>
+    </section>
 
-<footer>
-  <strong>LIZENYX | BRAID ARTISTRY</strong>
-  <p>Your hair. Your era. Your signature.</p>
-  <span id="year"></span> LIZENYX. All rights reserved.
-</footer>
+    <section class="screen" id="contact">
+      <div class="section-heading"><div class="eyebrow">Let's talk hair</div><h1>CONTACT</h1><p>Questions about a style or appointment? Reach out through Instagram.</p></div>
+      <div class="panel contact-card"><div class="eyebrow">LIZENYX | BRAID ARTISTRY</div><h2>Your next look is waiting.</h2><p>For questions, inspiration photos, or booking follow-ups, send a direct message to my braiding Instagram account.</p><p class="small-note">Instagram: <a href="https://www.instagram.com/lizenyx/" target="_blank" rel="noopener">@lizenyx</a></p><button class="primary" onclick="goToScreen('booking')">Start a Booking Request</button></div>
+    </section>
+  </main>
+  <footer><div class="brand">LIZENYX <span>|</span> BRAID ARTISTRY</div><p>Your hair. Your era. Your signature.</p><p>Â© <span id="year"></span> <strong>LIZENYX</strong>. All rights reserved.</p></footer>
 
-<script>
-// ==================================================
-// AVAILABILITY SETTINGS
-// Update these dates using YYYY-MM-DD.
-// Example: "2026-11-05"
-// Dates listed here cannot be selected in the calendar.
-// Remember to update this list whenever your availability changes.
-// ==================================================
-const UNAVAILABLE_DATES = [
-  // "2026-11-05",
-  // "2026-11-12"
-];
-
-// Times are preferences, not live availability.
-// Edit this list to change the displayed time options.
-const AVAILABLE_TIMES = [
-  "9:00 AM", "10:00 AM", "11:00 AM",
-  "12:00 PM", "1:00 PM", "2:00 PM",
-  "3:00 PM", "4:00 PM", "5:00 PM"
-];
-
-const DEPOSIT = 15;
-const CASH_APP_URL = "https://cash.app/$Wh0sLizaa";
-const steps = [...document.querySelectorAll(".step")];
-const progressItems = [...document.querySelectorAll("#progress span")];
-const styleSelect = document.getElementById("style");
-let currentStep = 0;
-let selectedDate = "";
-let selectedTime = "";
-let calendarMonth = new Date();
-calendarMonth.setDate(1);
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-function goToScreen(id) {
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.toggle("active", screen.id === id);
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-document.querySelectorAll("[data-go]").forEach(button => {
-  button.addEventListener("click", () => goToScreen(button.dataset.go));
-});
-
-function priceForStyle() {
-  const option = styleSelect.options[styleSelect.selectedIndex];
-  return Number(option?.dataset.price || 0);
-}
-function totalCost() {
-  return priceForStyle()
-    + Number(document.getElementById("length").value)
-    + Number(document.getElementById("boho").value);
-}
-function money(value) {
-  return "$" + value.toFixed(2);
-}
-function updateBalance() {
-  const total = totalCost();
-  document.getElementById("totalPrice").textContent = money(total);
-  document.getElementById("remainingPrice").textContent = money(Math.max(0, total - DEPOSIT));
-  const warning = document.getElementById("depositWarning");
-  if (total < DEPOSIT) {
-    warning.hidden = false;
-    warning.textContent = "This style costs less than the $15 deposit. Please contact the stylist before paying.";
-  } else {
-    warning.hidden = true;
-  }
-}
-styleSelect.addEventListener("change", updateBalance);
-document.getElementById("length").addEventListener("change", updateBalance);
-document.getElementById("boho").addEventListener("change", updateBalance);
-
-function showStep(index) {
-  currentStep = Math.max(0, Math.min(index, steps.length - 1));
-  steps.forEach((step, i) => step.classList.toggle("active", i === currentStep));
-  progressItems.forEach((item, i) => item.classList.toggle("active", i === currentStep));
-  if (currentStep === 3) updateBalance();
-  if (currentStep === 4) updateReview();
-}
-function validCurrentStep() {
-  if (currentStep === 0 && !styleSelect.value) {
-    styleSelect.reportValidity();
-    return false;
-  }
-  if (currentStep === 1 && (!selectedDate || !selectedTime)) {
-    document.getElementById("dateMessage").textContent = "Please choose an available date and a preferred time.";
-    return false;
-  }
-  if (currentStep === 2) {
-    const name = document.getElementById("clientName");
-    const contact = document.getElementById("contact");
-    if (!name.reportValidity() || !contact.reportValidity()) return false;
-  }
-  return true;
-}
-document.querySelectorAll("[data-next]").forEach(button => {
-  button.addEventListener("click", () => {
-    if (validCurrentStep()) showStep(currentStep + 1);
-  });
-});
-document.querySelectorAll("[data-prev]").forEach(button => {
-  button.addEventListener("click", () => showStep(currentStep - 1));
-});
-
-function localDateString(year, month, day) {
-  return year + "-" + String(month + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0");
-}
-function renderCalendar() {
-  const calendar = document.getElementById("calendar");
-  calendar.innerHTML = "";
-  const year = calendarMonth.getFullYear();
-  const month = calendarMonth.getMonth();
-  document.getElementById("calendarTitle").textContent =
-    calendarMonth.toLocaleString("en-US", { month: "long", year: "numeric" });
-
-  ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(name => {
-    const heading = document.createElement("div");
-    heading.className = "day-name";
-    heading.textContent = name;
-    calendar.appendChild(heading);
-  });
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  for (let i = 0; i < firstDay; i++) {
-    calendar.appendChild(document.createElement("div"));
-  }
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateString = localDateString(year, month, day);
-    const date = new Date(year, month, day);
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "calendar-day";
-    button.textContent = day;
-    const unavailable = UNAVAILABLE_DATES.includes(dateString);
-    const past = date < today;
-    const selected = selectedDate === dateString;
-
-    if (!past && !unavailable) button.classList.add("available");
-    if (selected) button.classList.add("selected");
-    button.disabled = past || unavailable;
-    button.setAttribute("aria-label", dateString + (unavailable ? ", unavailable" : ""));
-    button.title = unavailable ? "Unavailable" : dateString;
-
-    button.addEventListener("click", () => {
-      selectedDate = dateString;
-      selectedTime = "";
-      renderCalendar();
-      renderTimes();
-      document.getElementById("dateMessage").textContent =
-        "Selected: " + date.toLocaleDateString("en-US", { dateStyle: "long" }) +
-        ". Choose a preferred time below.";
-      updateReview();
-    });
-    calendar.appendChild(button);
-  }
-}
-function renderTimes() {
-  const grid = document.getElementById("timeGrid");
-  grid.innerHTML = "";
-  AVAILABLE_TIMES.forEach(time => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "time-option" + (selectedTime === time ? " selected" : "");
-    button.textContent = time;
-    button.addEventListener("click", () => {
-      selectedTime = time;
-      renderTimes();
-      updateReview();
-    });
-    grid.appendChild(button);
-  });
-}
-document.getElementById("prevMonth").addEventListener("click", () => {
-  const now = new Date();
-  now.setDate(1);
-  const candidate = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1);
-  if (candidate >= now) {
-    calendarMonth = candidate;
-    renderCalendar();
-  }
-});
-document.getElementById("nextMonth").addEventListener("click", () => {
-  calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1);
-  renderCalendar();
-});
-
-function buildRequest() {
-  const total = totalCost();
-  const balance = Math.max(0, total - DEPOSIT);
-  const dateText = selectedDate
-    ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", { dateStyle: "long" })
-    : "Not selected";
-  return [
-    "LIZENYX | BRAID ARTISTRY — APPOINTMENT REQUEST",
-    "",
-    "Name: " + document.getElementById("clientName").value,
-    "Contact: " + document.getElementById("contact").value,
-    "Hairstyle: " + styleSelect.value,
-    "Length add-on: " + (Number(document.getElementById("length").value) ? "+$15" : "None"),
-    "Boho add-on: " + (Number(document.getElementById("boho").value) ? "+$5" : "None"),
-    "Appointment date requested: " + dateText,
-    "Preferred time: " + (selectedTime || "Not selected"),
-    "Notes: " + (document.getElementById("notes").value || "None"),
-    "",
-    "Hairstyle and add-ons total: " + money(total),
-    "Deposit required: " + money(DEPOSIT),
-    "Remaining balance after appointment: " + money(balance),
-    "Deposit payment link: " + CASH_APP_URL,
-    "",
-    "STATUS: PENDING — stylist must confirm appointment and verify deposit."
-  ].join("\n");
-}
-function updateReview() {
-  document.getElementById("review").textContent = buildRequest();
-}
-document.getElementById("bookingForm").addEventListener("submit", event => {
-  event.preventDefault();
-  if (!validCurrentStep()) return;
-  const request = buildRequest();
-  document.getElementById("requestText").value = request;
-  document.getElementById("result").hidden = false;
-  document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
-});
-document.getElementById("copyRequest").addEventListener("click", async () => {
-  const text = document.getElementById("requestText").value;
-  try {
-    await navigator.clipboard.writeText(text);
-    document.getElementById("copyRequest").textContent = "Copied!";
-  } catch {
-    document.getElementById("requestText").select();
-    document.execCommand("copy");
-    document.getElementById("copyRequest").textContent = "Select and copy if needed";
-  }
-});
-
-renderCalendar();
-renderTimes();
-updateBalance();
-</script>
+  <script>
+    function goToScreen(id){
+      document.querySelectorAll(".screen").forEach(screen=>screen.classList.toggle("active",screen.id===id));
+      document.querySelectorAll("nav [data-go]").forEach(button=>button.classList.toggle("current-page",button.dataset.go===id));
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+    function showStep(step){
+      document.querySelectorAll(".booking-step").forEach(section=>section.classList.toggle("active",Number(section.dataset.step)===step));
+      document.querySelectorAll("[data-step-dot]").forEach(dot=>dot.classList.toggle("active",Number(dot.dataset.stepDot)===step));
+      updateEstimate();if(step===5)buildReview();
+      document.getElementById("booking").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    function nextStep(step){
+      if(step===1&&!document.getElementById("style").value){alert("Please choose a hairstyle first.");document.getElementById("style").focus();return;}
+      if(step===2){const date=document.getElementById("date"),time=document.getElementById("time");if(!date.value||!time.value){alert("Please choose a preferred date and time.");return;}if(date.value<getLocalToday()){alert("Please choose today or a future date.");date.focus();return;}}
+      if(step===3){const name=document.getElementById("customerName");if(!name.value.trim()){alert("Please enter your name.");name.focus();return;}}
+      if(step===4&&!document.getElementById("depositAcknowledged").checked){alert("Please confirm that you understand the deposit instructions.");return;}
+      showStep(step+1);
+    }
+    function prevStep(step){showStep(step-1)}
+    function getLocalToday(){const now=new Date();return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`}
+    function getSelectedValue(name){const selected=document.querySelector(`input[name="${name}"]:checked`);return selected?selected.value:""}
+    function getBasePrice(){const select=document.getElementById("style");return Number(select.options[select.selectedIndex]?.dataset?.price||0)}
+    function getTotal(){let total=getBasePrice();if(getSelectedValue("length").includes("+$15"))total+=15;if(getSelectedValue("boho").includes("+$10"))total+=10;return total}
+    function updateEstimate(){const output=document.getElementById("estimatedPrice");if(output)output.textContent="$"+getTotal()}
+    function getBookingData(){return{name:document.getElementById("customerName").value.trim(),style:document.getElementById("style").value,length:getSelectedValue("length"),boho:getSelectedValue("boho"),date:document.getElementById("date").value,time:document.getElementById("time").value,notes:document.getElementById("notes").value.trim(),total:getTotal()}}
+    function buildReview(){
+      const data=getBookingData();const formattedDate=data.date?new Date(data.date+"T12:00:00").toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}):"Not selected";
+      const summary=document.getElementById("bookingSummary");summary.replaceChildren();
+      [["Name",data.name],["Hairstyle",data.style],["Length",data.length],["Boho",data.boho],["Preferred date",formattedDate],["Preferred time",data.time],["Estimated total","$"+data.total],["Deposit","$15"],["Extra details",data.notes||"None"]].forEach(([label,value])=>{const row=document.createElement("div");row.className="summary-row";const left=document.createElement("span");left.textContent=label;const right=document.createElement("strong");right.textContent=value||"Not provided";row.append(left,right);summary.appendChild(row)});
+      document.getElementById("requestMessage").value=["LIZENYX | BRAID ARTISTRY â€” BOOKING REQUEST","","Name: "+data.name,"Hairstyle: "+data.style,"Length: "+data.length,"Boho: "+data.boho,"Preferred date: "+formattedDate,"Preferred time: "+data.time,"Estimated service total: $"+data.total,"Required deposit: $15","Extra details: "+(data.notes||"None"),"","I understand that my appointment is not confirmed until my date, time, and deposit are confirmed by the stylist."].join("\n");
+    }
+    async function copyRequest(){
+      const field=document.getElementById("requestMessage"),status=document.getElementById("copyStatus");
+      try{await navigator.clipboard.writeText(field.value);status.textContent="Booking request copied! Open Instagram and paste it into a DM."}
+      catch(error){field.focus();field.select();const copied=document.execCommand("copy");status.textContent=copied?"Booking request copied! Open Instagram and paste it into a DM.":"Select and copy the message above, then paste it into Instagram."}
+    }
+    function downloadRequest(){const file=new Blob([document.getElementById("requestMessage").value],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(file);const link=document.createElement("a");link.href=url;link.download="LIZENYX-booking-request.txt";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url)}
+    document.getElementById("style").addEventListener("change",updateEstimate);
+    document.querySelectorAll('input[name="length"],input[name="boho"]').forEach(input=>input.addEventListener("change",updateEstimate));
+    document.getElementById("date").min=getLocalToday();document.getElementById("year").textContent=new Date().getFullYear();goToScreen("home");updateEstimate();
+  </script>
 </body>
 </html>
